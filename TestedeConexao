@@ -1,0 +1,61 @@
+#!/bin/bash
+
+INTERVALO=1
+
+X=0
+Y=0
+Z=0
+
+while true; do
+OCORRENCIAS=$(ping 10.14.0.100 -c 3 | egrep 100%| wc -l)
+
+if [ $OCORRENCIAS -eq 1 ]
+then
+echo "erro"
+echo  "O Servidor 01 caiu as "$(date) | mail -s 'conexção perdida Servidor 01' emersonfm@gmail.com 
+X=1
+
+elif [ $X -eq 1 ]
+then
+echo "Servidor OK"
+echo "O Servidor 01 voltou as "$(date) |mail -s 'Conexção OK Servidor 01' emersonfm@gmail.com 
+X=0
+fi
+
+OCORRENCIAS1=$(ping 10.14.0.100 -c 3 | egrep 100%| wc -l)
+
+if [ $OCORRENCIAS1 -eq 1 ]
+then
+echo "erro"
+echo  "O Servidor 02 caiu as "$(date) | mail -s 'conexção perdida Servidor 02' emersonfm@gmail.com
+Y=1
+
+elif [ $Y -eq 1 ]
+then
+echo "Servidor OK"
+echo "O Servidor 02 voltou as "$(date) |mail -s 'Conexção OK Servidor 02' emersonfm@gmail.com
+Y=0
+fi
+
+
+OCORRENCIAS2=$(ping 10.14.0.100 -c 3 | egrep 100%| wc -l)
+
+if [ $OCORRENCIAS2 -eq 1 ]
+then
+echo "erro"
+echo  "O Servidor 03 caiu as "$(date) | mail -s 'conexção perdida Servidor 03' emersonfm@gmail.com
+Z=1
+
+elif [ $Z -eq 1 ]
+then
+echo "Servidor OK"
+echo "O Servidor 03 voltou as "$(date) |mail -s 'Conexção OK Servidor 03' emersonfm@gmail.com
+Z=0
+fi
+
+
+
+
+
+sleep $INTERVALO;
+done
